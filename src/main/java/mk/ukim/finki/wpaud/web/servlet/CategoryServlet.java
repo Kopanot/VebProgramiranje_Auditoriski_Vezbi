@@ -1,5 +1,8 @@
 package mk.ukim.finki.wpaud.web.servlet;
 
+import mk.ukim.finki.wpaud.model.Category;
+import mk.ukim.finki.wpaud.service.CategoryService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,52 +17,10 @@ import java.util.List;
 @WebServlet(name = "servlet-category", urlPatterns = "/servlet/category")
 public class CategoryServlet extends HttpServlet {
 
+    private final CategoryService categoryService;
 
-    //internal class Category
-    class Category{
-        private String name;
-        private String description;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public Category(String name) {
-            this.name = name;
-        }
-
-        public Category(String name, String description) {
-            this.name = name;
-            this.description = description;
-        }
-    }
-
-
-    //List for the categories
-    private List<Category> categoryList = null;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-
-        //initializing the list
-        this.categoryList = new ArrayList<>();
-        this.categoryList.add(new Category("Software", "Software Category"));
-        this.categoryList.add(new Category("Books","Books Category"));
-        System.out.println("Category server init()");
-
+    public CategoryServlet(CategoryService categoryService){
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -81,7 +42,7 @@ public class CategoryServlet extends HttpServlet {
         //List the categories
         out.println("<h3>Category List</h3>");
         out.println("<ul>");
-        this.categoryList.forEach(r->
+        categoryService.listCategories().forEach(r->
                 out.format("<li>%s (%s)</li>",r.getName(),r.getDescription()));
         out.println("</ul>");
 
@@ -103,7 +64,7 @@ public class CategoryServlet extends HttpServlet {
         out.println("</html>"); //HTML Ends
 
 
-        System.out.println("Category server doGet()");
+        //System.out.println("Category server doGet()");
         out.flush();
     }
 
@@ -111,16 +72,9 @@ public class CategoryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String categoryName = req.getParameter("name");
         String categoryDescription = req.getParameter("description");
-        addCategory(categoryName,categoryDescription); //add the new category
+        categoryService.create(categoryName,categoryDescription); //add the new category
         resp.sendRedirect("/servlet/category"); //302 code, redirect /servlet/category which calls doGet()
-        System.out.println("doPost() pravi redirect kon /servlet/category");
-    }
-
-
-    public void addCategory(String name, String description){
-        if (!name.isEmpty() && name!= null){
-            this.categoryList.add(new Category(name,description));
-        }
+        //System.out.println("doPost() pravi redirect kon /servlet/category");
     }
 
 }
