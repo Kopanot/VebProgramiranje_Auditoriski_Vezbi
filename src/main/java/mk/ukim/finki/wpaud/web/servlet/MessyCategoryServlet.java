@@ -1,6 +1,5 @@
 package mk.ukim.finki.wpaud.web.servlet;
 
-import mk.ukim.finki.wpaud.model.Category;
 import mk.ukim.finki.wpaud.service.CategoryService;
 
 import javax.servlet.ServletException;
@@ -10,16 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @WebServlet(name = "servlet-category", urlPatterns = "/servlet/category")
-public class CategoryServlet extends HttpServlet {
+public class MessyCategoryServlet extends HttpServlet {
 
     private final CategoryService categoryService;
 
-    public CategoryServlet(CategoryService categoryService){
+    public MessyCategoryServlet(CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
