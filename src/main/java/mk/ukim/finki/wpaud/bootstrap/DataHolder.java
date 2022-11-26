@@ -20,7 +20,7 @@ public class DataHolder {
         categoryList.add(new Category("Software", "Software Category"));
         categoryList.add(new Category("Books","Books Category"));
 
-        users.add(new User("stefan.atanasovski", "sa", "Stefan", "Atanasovski") );
+        users.add(new User("sa", "sa", "Stefan", "Atanasovski") );
         users.add(new User("risto.ristevski", "rr", "Riste", "Ristevski") );
     }
 

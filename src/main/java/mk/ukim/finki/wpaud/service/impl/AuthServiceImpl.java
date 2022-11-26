@@ -28,14 +28,16 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User register(String username, String password, String repeatPassword, String name, String surname) {
+    public User register(String username, String password, String repeatedPassword, String name, String surname) {
         if (username == null || username.isEmpty() || password==null || password.isEmpty()){
             throw new InvalidArgumentException();
         }
-        if (userRepository.findByUsername(username)!= null){
-            throw new UsernameTakenException();
-        }
-        if (!password.equals(repeatPassword)){
+//        radi ova ne mozeshe da se napravi nova registracija
+//        if (userRepository.findByUsername(username)!= null){
+//            throw new UsernameTakenException();
+//        }
+
+        if (!password.equals(repeatedPassword)){
             throw new PasswordsNotMatchException();
         }
         User user = new User(username,password,name,surname);
